@@ -7,8 +7,8 @@ const sendMail = asyncHandler(async ({ email, html }) => {
     port: 587,
     secure: false, // Use `true` for port 465, `false` for all other ports
     auth: {
-      user: "",
-      pass: "",
+      user: process.env.EMAIL_NAME,
+      pass: process.env.EMAIL_APP_PASSWORD,
     },
   });
   // send mail with defined transport object

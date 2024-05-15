@@ -179,6 +179,19 @@ const resetPassword = asyncHandler(async (req, res) => {
   });
 });
 
+const updateUserByAdmin = asyncHandler(async (req, res) => {
+  const { uid } = req.params;
+  if (!req.body || Object.keys(req.body).length === 0)
+    throw new Error("Missing inputs");
+  const response = await User.findByIdAndUpdate(uid, req.body, {
+    new: true,
+  }).select("password role refreshToken");
+  return res.status(200).json({
+    success: response ? true : false,
+    updatedUser: response ? response : "Some thing went wrong",
+  });
+});
+
 module.exports = {
   register,
   login,
@@ -189,4 +202,5 @@ module.exports = {
   logout,
   forgotPassword,
   resetPassword,
+  updateUserByAdmin,
 };

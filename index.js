@@ -1,6 +1,7 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const db = require("./config/db");
+const initRoutes = require("./routes");
 require("dotenv").config();
 
 const app = express();
@@ -9,10 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const PORT = process.env.PORT || 1905;
 db();
-
-app.get("/", (req, res) => {
-  res.send("Welcome");
-});
+initRoutes(app);
 
 app.listen(PORT, () => {
   console.log("Hello NodeJS");
