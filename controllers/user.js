@@ -5,7 +5,7 @@ require("dotenv").config();
 const sendMail = require("../untils/sendMail");
 
 const getUsers = asyncHandler(async (req, res) => {
-  const response = await User.find().select("refreshToken password role");
+  const response = await User.find().select("-refreshToken -password -role");
   return res.status(200).json({
     success: response ? true : false,
     users: response,
@@ -13,9 +13,9 @@ const getUsers = asyncHandler(async (req, res) => {
 });
 
 const deleteUser = asyncHandler(async (req, res) => {
-  const { id } = req.query;
-  if (!id) throw new Error("Missing inputs");
-  const response = await User.findByIdAndDelete(id);
+  const { _id } = req.query;
+  if (!_id) throw new Error("Missing inputs");
+  const response = await User.findByIdAndDelete(_id);
   return res.status(200).json({
     success: response ? true : false,
     deletedUser: response
@@ -25,12 +25,12 @@ const deleteUser = asyncHandler(async (req, res) => {
 });
 
 const updateUser = asyncHandler(async (req, res) => {
-  const { id } = req.user;
-  if (!id || Object.keys(req.body).length === 0)
+  const { _id } = req.user;
+  if (!_id || Object.keys(req.body).length === 0)
     throw new Error("Missing inputs");
-  const response = await User.findByIdAndUpdate(id, req.body, {
+  const response = await User.findByIdAndUpdate(_id, req.body, {
     new: true,
-  }).select("password role refreshToken");
+  }).select("-password -role -refreshToken");
   return res.status(200).json({
     success: response ? true : false,
     updatedUser: response ? response : "Some thing went wrong",
@@ -103,7 +103,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     throw new Error("No refresh token in cookies");
   const rs = await jwt.verify(cookie.refreshToken, process.env.JWT_SECRET);
   const response = await User.findOne({
-    _id: rs.id,
+    _id: rs._id,
     refreshToken: cookie.refreshToken,
   });
   return res.status(200).json({
@@ -131,7 +131,7 @@ const logout = asyncHandler(async (req, res) => {
   });
   return res.status(200).json({
     success: true,
-    mes: "Logout is done",
+    message: "Logout is done",
   });
 });
 

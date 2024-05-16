@@ -34,8 +34,8 @@ const userSchema = new Schema(
       type: Array,
       default: [],
     },
-    address: [{ type: mongoose.Types.ObjectId, ref: "Address" }],
-    wishlist: [{ type: mongoose.Types.ObjectId, ref: "Product" }],
+    address: [{ type: moongoose.Types.ObjectId, ref: "Address" }],
+    wishlist: [{ type: moongoose.Types.ObjectId, ref: "Product" }],
     isBlocked: {
       type: Boolean,
       default: false,
@@ -82,4 +82,4 @@ userSchema.methods = {
 };
 
 //Export the model
-module.exports = mongoose.model("User", userSchema);
+module.exports = moongoose.model("User", userSchema);

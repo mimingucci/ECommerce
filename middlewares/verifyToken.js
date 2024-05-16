@@ -28,7 +28,7 @@ const isAdmin = asyncHandler((req, res, next) => {
   if (role !== "admin")
     return res.status(401).json({
       success: false,
-      mes: " REQUIRE ADMIN ROLE",
+      message: "REQUIRE ADMIN ROLE",
     });
   next();
 });
