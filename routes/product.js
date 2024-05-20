@@ -8,5 +8,6 @@ router.get("/", controller.getProducts);
 router.put("/:pid", [verifyAccessToken, isAdmin], controller.updateProduct);
 router.delete("/:pid", [verifyAccessToken, isAdmin], controller.deleteProduct);
 router.get("/:pid", controller.getProduct);
+router.put("/ratings", verifyAccessToken, controller.ratings);
 
 module.exports = router;
