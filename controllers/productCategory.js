@@ -1,6 +1,5 @@
 const asyncHandler = require("express-async-handler");
 const ProductCategory = require("../models/productCategory");
-const productCategory = require("../models/productCategory");
 
 const createCategory = asyncHandler(async (req, res) => {
   const response = await ProductCategory.create(req.body);

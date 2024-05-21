@@ -128,6 +128,18 @@ const ratings = asyncHandler(async (req, res) => {
   return res.status(200).json("Succeesfully updated");
 });
 
+const uploadImages = asyncHandler(async (req, res) => {
+  const { pid } = req.params;
+  if (!req.files) throw new Error("Missing inputs");
+  const response = await Product.findByIdAndUpdate(pid, {
+    $push: { images: { $each: req.files.map((i) => i.path) } },
+  });
+  return res.status(200).json({
+    success: response ? true : false,
+    updatedProduct: response ? response : "Cannot upload images",
+  });
+});
+
 module.exports = {
   createProduct,
   getProduct,
@@ -135,4 +147,5 @@ module.exports = {
   updateProduct,
   deleteProduct,
   ratings,
+  uploadImages,
 };

@@ -13,5 +13,5 @@ db();
 initRoutes(app);
 
 app.listen(PORT, () => {
-  console.log("Hello NodeJS");
+  console.log(`Hello NodeJS in port ${PORT}`);
 });
