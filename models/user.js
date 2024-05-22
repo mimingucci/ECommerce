@@ -1,6 +1,7 @@
 const moongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
+const { default: mongoose } = require("mongoose");
 const Schema = moongoose.Schema;
 const userSchema = new Schema(
   {
@@ -30,11 +31,17 @@ const userSchema = new Schema(
       type: String,
       default: "user",
     },
-    cart: {
-      type: Array,
-      default: [],
-    },
-    address: [{ type: moongoose.Types.ObjectId, ref: "Address" }],
+    cart: [
+      {
+        product: {
+          type: mongoose.Types.ObjectId,
+          ref: "Product",
+        },
+        quantity: Number,
+        color: String,
+      },
+    ],
+    address: String,
     wishlist: [{ type: moongoose.Types.ObjectId, ref: "Product" }],
     isBlocked: {
       type: Boolean,
